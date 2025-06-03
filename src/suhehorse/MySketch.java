@@ -6,7 +6,9 @@ package suhehorse;
 import processing.core.PApplet;
 
 public class MySketch extends PApplet {
-
+    
+    GameObject suhe;
+    
     public void settings(){
 	   //sets the size of the window
         size (1280 ,720);
@@ -16,11 +18,20 @@ public class MySketch extends PApplet {
 	   //sets the background colour using R,G,B (https://rgbcolorpicker.com/)
         background(100,100,100);
         textSize(20);
-
+        
+        suhe = new Suhe(this, 100,360);
+        
     }
     
     public void draw(){
-        
+        if (keyPressed) {
+            if (keyCode == UP) {
+              suhe.move(0, -5);
+            } else if (keyCode == DOWN) {
+              suhe.move(0, 5);
+            }
+        }
+        suhe.draw();
     }
 //    public void drawCollisions(){
 //        if (car.isRectCollidingWith(car2)){

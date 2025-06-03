@@ -6,7 +6,7 @@ package suhehorse;
 
 /**
  *
- * @author 350326790
+ * @author a
  */
 public class SuheHorse {
 
