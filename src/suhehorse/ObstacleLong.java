@@ -4,10 +4,18 @@
  */
 package suhehorse;
 
+import processing.core.PApplet;
+
 /**
  *
  * @author 350326790
  */
-public class Obstacle {
+public class ObstacleLong extends GameObject{
+    
+    ObstacleLong(PApplet p, float x, float y){
+        
+        super(p, x, y, "images/obstacle2");
+    }
+    
     
 }

@@ -7,7 +7,7 @@ import processing.core.PApplet;
 
 public class MySketch extends PApplet {
     
-    GameObject suhe;
+    GameManager gm;
     BackgroundManager bg;
     float baseSpeed = 3;
     float news = 0;
@@ -25,7 +25,7 @@ public class MySketch extends PApplet {
 	   //sets the background colour using R,G,B (https://rgbcolorpicker.com/)
         background(100,100,100);
         textSize(50);
-        suhe = new Suhe(this, 600,360);
+        gm = new GameManager();
         bg = new BackgroundManager(this, this.loadImage("images/background.png"), baseSpeed);
     }
     
@@ -33,6 +33,8 @@ public class MySketch extends PApplet {
         //new speed
         score += scoreInc;
         news = baseSpeed + (int)score/30 ;
+        // set speed for gameobjects
+        
         
         //Background
         bg.update();
@@ -40,19 +42,15 @@ public class MySketch extends PApplet {
         System.out.println(news);
         bg.setSpeed(news);
         
+        //Score
         textAlign(CENTER,CENTER);
         fill(255);
         this.text(String.format("%.1f", score),640  ,50);
         
-        if (keyPressed) {
-            if (keyCode == UP) {
-              suhe.move(0, -5);
-            } else if (keyCode == DOWN) {
-              suhe.move(0, 5);
-            }
-        }
         
-        suhe.draw();
+        
+        gm.updateAll();
+        gm.displayAll();
     }
 //    public void drawCollisions(){
 //        if (car.isRectCollidingWith(car2)){

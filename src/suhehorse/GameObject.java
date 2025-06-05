@@ -30,9 +30,15 @@ public class GameObject {
         x+=dx*speed;
         y+=dy*speed;
     }
+    public void update(){
+        x-=speed;
+    }
     public void setSpeed(float s) {
             speed = s;}
-    public void draw(){}
+    public void display(){
+        app.image(image,x,y);
+    }
+    
     public boolean isRectCollidingWith(GameObject other){
         boolean a = x < other.x + other.width;
         boolean b = x + width > other.x;

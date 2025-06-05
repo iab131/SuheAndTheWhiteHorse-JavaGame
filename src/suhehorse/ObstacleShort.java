@@ -10,9 +10,9 @@ import processing.core.PApplet;
  *
  * @author 350326790
  */
-public class Enemy extends GameObject{
-    
-    Enemy(PApplet p, float x, float y){
-        super(p, x, y, "images/enemy");
+public class ObstacleShort extends GameObject{
+
+    ObstacleShort(PApplet p, float x, float y){
+        super(p, x, y, "images/obstacle");
     }
 }

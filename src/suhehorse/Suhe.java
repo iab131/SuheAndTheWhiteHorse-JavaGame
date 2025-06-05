@@ -4,7 +4,10 @@
  */
 package suhehorse;
 import processing.core.PApplet;
+import static processing.core.PConstants.DOWN;
+import static processing.core.PConstants.UP;
 import processing.core.PImage;
+
 /**
  *
  * @author a
@@ -16,10 +19,7 @@ public class Suhe extends GameObject{
         super(p,x,y, "images/suhe.png");
         health = 100;
     }
-    @Override
-    public void draw(){
-        app.image(image,x,y);
-    }
+    
     @Override
     public void move(int dx,int dy){
         
@@ -29,4 +29,15 @@ public class Suhe extends GameObject{
             y = nextY;
         }
     }
+    @Override
+    public void update(){
+        if (keyPressed) {
+            if (keyCode == UP) {
+              suhe.move(0, -5);
+            } else if (keyCode == DOWN) {
+              suhe.move(0, 5);
+            }
+        }
+    }
+    
 }
