@@ -8,6 +8,13 @@ import processing.core.PApplet;
 public class MySketch extends PApplet {
     
     GameObject suhe;
+    BackgroundManager bg;
+    float baseSpeed = 3;
+    float news = 0;
+    double score = 0;
+    double scoreInc = .1;
+    
+    
     
     public void settings(){
 	   //sets the size of the window
@@ -17,13 +24,26 @@ public class MySketch extends PApplet {
     public void setup(){
 	   //sets the background colour using R,G,B (https://rgbcolorpicker.com/)
         background(100,100,100);
-        textSize(20);
-        
-        suhe = new Suhe(this, 100,360);
-        
+        textSize(50);
+        suhe = new Suhe(this, 600,360);
+        bg = new BackgroundManager(this, this.loadImage("images/background.png"), baseSpeed);
     }
     
     public void draw(){
+        //new speed
+        score += scoreInc;
+        news = baseSpeed + (int)score/30 ;
+        
+        //Background
+        bg.update();
+        bg.display();
+        System.out.println(news);
+        bg.setSpeed(news);
+        
+        textAlign(CENTER,CENTER);
+        fill(255);
+        this.text(String.format("%.1f", score),640  ,50);
+        
         if (keyPressed) {
             if (keyCode == UP) {
               suhe.move(0, -5);
@@ -31,6 +51,7 @@ public class MySketch extends PApplet {
               suhe.move(0, 5);
             }
         }
+        
         suhe.draw();
     }
 //    public void drawCollisions(){

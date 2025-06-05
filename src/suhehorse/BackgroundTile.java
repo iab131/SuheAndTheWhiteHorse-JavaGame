@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package suhehorse;
+import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
@@ -13,8 +14,10 @@ public class BackgroundTile {
     PImage img;
     protected float x,y;
     protected float speed;
+    protected PApplet app;
     
-    BackgroundTile(PImage img, float x, float y, float s){
+    BackgroundTile(PApplet p,PImage img, float x, float y, float s){
+        app = p;
         this.img = img;
         this.x = x;
         this.y = y;
@@ -24,7 +27,7 @@ public class BackgroundTile {
         x -= speed;
     }
     void display(){
-        image(img,x,y);
+        app.image(img,x,y);
     }
     boolean isOffScreen(){
         return x + img.width < 0;
