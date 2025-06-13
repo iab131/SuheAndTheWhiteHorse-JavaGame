@@ -38,7 +38,6 @@ public class MySketch extends PApplet {
     public void draw(){
         if (!gg){
             if (frameCount%(120- (int)(score/10))==0){
-                System.out.println(";aldjfa;kdjf");
                 gm.spawnEnemy();
             }
             //new speed
