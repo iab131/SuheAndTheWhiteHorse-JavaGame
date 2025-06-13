@@ -17,13 +17,16 @@ public class GameObject {
     protected PImage image;
     protected PApplet app;
     public static float speed;
+    protected int size;
     GameObject(PApplet p, float x,float y, PImage i){
         app = p;
         this.x = x;
         this.y = y;
         this.image = i;
-        
-        
+    }
+    GameObject(PApplet p, float x,float y, PImage i, int size){
+        this(p,x,y,i);
+        this.size = size;
     }
     public void setImage(PImage i){
         image = i;
@@ -33,6 +36,9 @@ public class GameObject {
     public void move(int dx,int dy) {
         x+=dx*speed;
         y+=dy*speed;
+    }
+    public void move(int dx){
+        x+=dx*speed;
     }
     public void update(){
         x-=speed;
