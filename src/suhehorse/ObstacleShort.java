@@ -5,14 +5,19 @@
 package suhehorse;
 
 import processing.core.PApplet;
+import processing.core.PImage;
 
 /**
  *
  * @author 350326790
  */
 public class ObstacleShort extends GameObject{
-
+    PImage img;
     ObstacleShort(PApplet p, float x, float y){
-        super(p, x, y, "images/obstacle");
+        super(p,x,y, null);
+        img = p.loadImage("images/obstacle.png");
+        img.resize(0,100);
+        super.setImage(img);
+   
     }
 }

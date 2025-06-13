@@ -16,13 +16,17 @@ public class GameObject {
     public float width, height;
     protected PImage image;
     protected PApplet app;
-    public float speed;
-    GameObject(PApplet p, float x,float y, String path){
+    public static float speed;
+    GameObject(PApplet p, float x,float y, PImage i){
         app = p;
         this.x = x;
         this.y = y;
-        this.image = app.loadImage(path);
+        this.image = i;
         
+        
+    }
+    public void setImage(PImage i){
+        image = i;
         height = image.pixelHeight;
         width = image.pixelWidth;
     }
@@ -35,6 +39,7 @@ public class GameObject {
     }
     public void setSpeed(float s) {
             speed = s;}
+    
     public void display(){
         app.image(image,x,y);
     }

@@ -4,8 +4,7 @@
  */
 package suhehorse;
 import processing.core.PApplet;
-import static processing.core.PConstants.DOWN;
-import static processing.core.PConstants.UP;
+
 import processing.core.PImage;
 
 /**
@@ -14,9 +13,9 @@ import processing.core.PImage;
  */
 public class Suhe extends GameObject{
     public int health;
-    
     Suhe(PApplet p, float x, float y){
-        super(p,x,y, "images/suhe.png");
+        super(p,x,y, null);
+        super.setImage(p.loadImage("images/suhe.png"));
         health = 100;
     }
     
@@ -29,15 +28,15 @@ public class Suhe extends GameObject{
             y = nextY;
         }
     }
-    @Override
-    public void update(){
-        if (keyPressed) {
-            if (keyCode == UP) {
-              suhe.move(0, -5);
-            } else if (keyCode == DOWN) {
-              suhe.move(0, 5);
-            }
-        }
+    public void push(){
+        x-=speed;
+    }
+    
+    public void healthBar(){
+        app.fill(255);
+        app.rect(50,35,200,30);
+        app.fill(255,0,0);//red
+        app.rect(50,35, health*2, 30);
     }
     
 }
