@@ -27,6 +27,7 @@ public class GameObject {
     GameObject(PApplet p, float x,float y, PImage i, int size){
         this(p,x,y,i);
         this.size = size;
+        image.resize(0, size);
     }
     public void setImage(PImage i){
         image = i;
