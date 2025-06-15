@@ -1,42 +1,60 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package suhehorse;
+
 import processing.core.PApplet;
 import processing.core.PImage;
 
 /**
- *
- * @author 350326790
+ * Represents one scrollable background tile.
  */
 public class BackgroundTile {
-    PImage img;
-    protected float x,y;
-    protected float speed;
-    protected PApplet app;
-    
-    BackgroundTile(PApplet p,PImage img, float x, float y, float s){
+    PImage img;          // Background image
+    protected float x, y; // Tile position
+    protected float speed; // Scroll speed
+    protected PApplet app; // Reference to sketch
+
+    /**
+     * Constructor to initialize tile position and speed.
+     */
+    BackgroundTile(PApplet p, PImage img, float x, float y, float s) {
         app = p;
         this.img = img;
         this.x = x;
         this.y = y;
         speed = s;
     }
-    void update(){
+
+    /**
+     * Update tile position based on speed.
+     */
+    void update() {
         x -= speed;
     }
-    void display(){
-        app.image(img,x,y);
+
+    /**
+     * Draw the tile image.
+     */
+    void display() {
+        app.image(img, x, y);
     }
-    boolean isOffScreen(){
+
+    /**
+     * Check if tile has fully moved off screen.
+     */
+    boolean isOffScreen() {
         return x + img.width < 0;
     }
-    void resetX(float newX){
+
+    /**
+     * Reset tile x-position to given value.
+     */
+    void resetX(float newX) {
         x = newX;
     }
-    void setSpeed(float s){
+
+    /**
+     * Set new speed for this tile.
+     */
+    void setSpeed(float s) {
         speed = s;
     }
-            
 }

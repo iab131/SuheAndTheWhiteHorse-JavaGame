@@ -1,140 +1,107 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package suhehorse;
+
 import java.io.FileWriter;
 import java.io.IOException;
 import java.io.PrintWriter;
 import processing.core.PApplet;
-import java.io.File;  // Import the File class
-import java.io.FileNotFoundException;  // Import this class to handle errors
-import java.util.Scanner; // Import the Scanner class to read text files
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
 
+/**
+ * Main game loop for SuheHorse runner game.
+ * Manages gameplay, background scrolling, and scoring.
+ */
 public class MySketch extends PApplet {
-    
-    GameManager gm;
-    BackgroundManager bg;
-    float baseSpeed = 3;
-    float news = 0;
-    double score = 0;
-    double scoreInc = .1;
-    boolean gg = false;
-    
-    
-    public void settings(){
-	   //sets the size of the window
-        size (1280 ,720);
+
+    GameManager gm;                 // handles game logic and objects
+    BackgroundManager bg;          // handles background scrolling
+    float baseSpeed = 3;           // starting speed
+    float news = 0;                // current speed
+    double score = 0;              // current score
+    double scoreInc = 0.1;         // score increase per frame
+    boolean gg = false;            // game over flag
+
+    public void settings() {
+        size(1280, 720);           // set game window size
     }
-    
-    public void setup(){
-	   //sets the background colour using R,G,B (https://rgbcolorpicker.com/)
-        background(100,100,100);
-        textSize(50);
-        gm = new GameManager(this);
-        bg = new BackgroundManager(this, this.loadImage("images/background.png"), baseSpeed);
+
+    public void setup() {
+        background(100, 100, 100); // grey background at start
+        textSize(50);              // score and text size
+
+        gm = new GameManager(this);   // create GameManager
+        bg = new BackgroundManager(this, loadImage("images/background.png"), baseSpeed); // load scrolling bg
     }
-    
-    public void draw(){
-        if (!gg){
-            if (frameCount%(120- (int)(score/10))==0){
+
+    public void draw() {
+        if (!gg) {
+            // spawn new enemy based on frame rate and score
+            if (frameCount % (120 - (int)(score / 10)) == 0) {
                 gm.spawnEnemy();
             }
-            //new speed
-            score += scoreInc;
-            news = baseSpeed + (int)score/60 ;
-            GameObject.speed = news;
-            // set speed for gameobjects
 
+            score += scoreInc;             // increase score
+            news = baseSpeed + (int)score / 60; // scale speed
+            GameObject.speed = news;       // update all object speed
+
+            // move player up/down
             if (keyPressed) {
                 if (keyCode == UP) {
-                  gm.suheMove(true);
+                    gm.suheMove(true);
                 } else if (keyCode == DOWN) {
-                  gm.suheMove(false);
+                    gm.suheMove(false);
                 }
             }
-            //Background
-            bg.update();
-            bg.display();
-            bg.setSpeed(news);
 
-            gm.updateAll();
-            gm.displayAll();
+            bg.setSpeed(news);    // set bg scroll speed
+            bg.update();          // update bg position
+            bg.display();         // draw background
 
-            //Score
-            textAlign(CENTER,CENTER);
+            gm.updateAll();       // move + handle collisions
+            gm.displayAll();      // draw player/enemies
+
+            // draw score
             fill(255);
-            this.text(String.format("%.1f", score),640  ,50);
+            textAlign(CENTER, CENTER);
+            text(String.format("%.1f", score), 640, 50);
 
-            if (gm.checkGG()){
-                    System.out.println("GGS");
-                    textAlign(CENTER,CENTER);
-                    double highestScore = getHighestScore();
-                    highestScore = Math.max(highestScore,score);
-                    fill(255);
-                    this.text("GGS YOU LOST \n BEST SCORE: " + String.format("%.1f", highestScore) + "\nYOUR SCORE: " + String.format("%.1f", score),640  ,360);
-                    gg = true;
-                    //record best score
-                    recordScore(highestScore);
+            // if game over
+            if (gm.checkGG()) {
+                double highestScore = Math.max(getHighestScore(), score);
+                gg = true;                  // freeze game
+                recordScore(highestScore);  // save best score
+
+                // display game over message
+                text("GGS YOU LOST\nBEST SCORE: " + String.format("%.1f", highestScore) +
+                     "\nYOUR SCORE: " + String.format("%.1f", score), 640, 360);
             }
         }
-        
-        
     }
-    
-    public void recordScore(double score){
-        try {
-            // create printwriter
-            PrintWriter writer = new PrintWriter (new FileWriter("Score.txt", false));
-            // write to file
-            writer.print(String.format("%.1f",score));
-            // close writer
-            writer.close();
-        }
-        // catch exception errors
-        catch(IOException e){
-            System.out.println("Java Exception: " + e);
-        }
-    }
-    
-    public double getHighestScore(){
-        try {
-            Scanner myReader = new Scanner(new File("Score.txt"));
-            String score = myReader.nextLine();
-            System.out.println(score);
-            return Double.parseDouble(score);
-        } catch (FileNotFoundException e) {
-            System.out.println("An error occurred.");
-            return 0;
-        }   
-    }
-//    public void drawCollisions(){
-//        if (car.isRectCollidingWith(car2)){
-//            fill(255,0,0);
-//            this.text("oouch",car2.x,car2.y);
-//        }
-//    }
-////
-//    public void mousePressed(){
-////        car.moveTo(mouseX, mouseY);
-//        if(car2.isClicked(mouseX, mouseY)){
-//            showInfo = !showInfo;
-//        }
-//        else{
-//            showInfo = false;
-//        }
-//    }
-//        public void keyPressed(){
-//        if (stage == 0){
-//            if (keyCode == ENTER){
-//                stage = 1;
-//                car = new Car(this, 0,0, Integer.parseInt(userInput));
-//            }
-//            else if (key != CODED){
-//                userInput += key;
-//            }
-//            
-//        }
-//    }
-}
 
+    /**
+     * Saves highest score to file.
+     */
+    public void recordScore(double score) {
+        try {
+            PrintWriter writer = new PrintWriter(new FileWriter("Score.txt", false));
+            writer.print(String.format("%.1f", score)); // write score
+            writer.close();                             // save and close
+        } catch (IOException e) {
+            System.out.println("Save error: " + e);
+        }
+    }
+
+    /**
+     * Loads the highest score from file.
+     */
+    public double getHighestScore() {
+        try {
+            Scanner reader = new Scanner(new File("Score.txt"));
+            return Double.parseDouble(reader.nextLine()); // read score
+        } catch (FileNotFoundException e) {
+            System.out.println("No score file found.");
+            return 0;
+        }
+    }
+}

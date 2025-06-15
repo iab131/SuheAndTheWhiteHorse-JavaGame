@@ -1,23 +1,21 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package suhehorse;
 
 import processing.core.PApplet;
 import processing.core.PImage;
+
 /**
- *
- * @author 350326790
+ * Long obstacle that Suhe must avoid.
  */
-public class ObstacleLong extends GameObject{
-    PImage img;
-    ObstacleLong(PApplet p, float x, float y){
-        super(p,x,y, null);
-        img = p.loadImage("images/obstacle2.png");
-        img.resize(0,200);
-        super.setImage(img);
+public class ObstacleLong extends GameObject {
+    PImage img; // Obstacle image
+
+    /**
+     * Constructor: loads and sets a tall image.
+     */
+    ObstacleLong(PApplet p, float x, float y) {
+        super(p, x, y, null); // Call base constructor
+        img = p.loadImage("images/obstacle2.png"); // Load image
+        img.resize(0, 200); // Resize height to 200
+        super.setImage(img); // Set image in parent
     }
-    
-    
 }
